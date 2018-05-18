@@ -1,7 +1,7 @@
 {
-    "name": "typescript-template",
-    "version": "1.0.0",
-    "description": "A template for a TypeScript app. To make it easier to start a new app without having to go through all the configuration.",
+    "name": "data-forge-indicators",
+    "version": "0.0.1",
+    "description": "Financial indicators for use with Data-Forge.",
     "main": "build/index.js",
     "types": "build/index.d.ts",
     "scripts": {
@@ -16,17 +16,17 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://ashleydavis@github.com/ashleydavis/typescript-template.git"
+        "url": "git+https://github.com/data-forge/data-forge-indicators.git"
     },
     "keywords": [],
     "author": "ashley@codecapers.com.au",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/ashleydavis/typescript-template/issues"
+        "url": "https://github.com/data-forge/data-forge-indicators/issues"
     },
-    "homepage": "https://github.com/ashleydavis/typescript-template#readme",
+    "homepage": "https://github.com/data-forge/data-forge-indicators#readme",
     "dependencies": {
-        "moment": "2.18.1"
+        "data-forge": "1.0.7"
     },
     "devDependencies": {
         "@types/chai": "4.0.4",
