@@ -6,3 +6,5 @@ node_modules/
 r.bat
 test/
 build/test/
+todo.txt
+.nyc_output/
