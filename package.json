@@ -1,0 +1,58 @@
+{
+    "name": "typescript-template",
+    "version": "1.0.0",
+    "description": "A template for a TypeScript app. To make it easier to start a new app without having to go through all the configuration.",
+    "main": "build/index.js",
+    "types": "build/index.d.ts",
+    "scripts": {
+        "clean": "rm -rf build/*",
+        "build": "tsc",
+        "clean-build": "rm -rf build/* && tsc",
+        "build:watch": "tsc --watch",
+        "clean-build:watch": "rm -rf build/* && tsc --watch",
+        "test": "nyc mocha --opts ./src/test/mocha.opts",
+        "test:watch": "nyc mocha --watch --watch-extensions ts --opts ./src/test/mocha.opts",
+        "prepublishOnly": "tsc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://ashleydavis@github.com/ashleydavis/typescript-template.git"
+    },
+    "keywords": [],
+    "author": "ashley@codecapers.com.au",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ashleydavis/typescript-template/issues"
+    },
+    "homepage": "https://github.com/ashleydavis/typescript-template#readme",
+    "dependencies": {
+        "moment": "2.18.1"
+    },
+    "devDependencies": {
+        "@types/chai": "4.0.4",
+        "@types/mocha": "2.2.43",
+        "@types/node": "8.0.28",
+        "chai": "4.1.2",
+        "mocha": "3.5.3",
+        "nyc": "11.8.0",
+        "source-map-support": "0.5.6",
+        "ts-node": "3.3.0",
+        "typescript": "2.5.2"
+    },
+    "nyc": {
+        "extension": [
+            ".ts"
+        ],
+        "exclude": [
+            "**/*.d.ts",
+            "src/test/**/*",
+            "build/**/*",
+            "docs/**/*",
+            "coverage/**/*"
+        ],
+        "reporter": [
+            "text-summary"
+        ],
+        "all": true
+    }
+}

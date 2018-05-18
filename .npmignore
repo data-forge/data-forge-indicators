@@ -1,0 +1,8 @@
+src/
+node_modules/
+.vscode/
+.gitignore
+*.log
+r.bat
+test/
+build/test/
