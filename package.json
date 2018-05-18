@@ -26,7 +26,7 @@
     },
     "homepage": "https://github.com/data-forge/data-forge-indicators#readme",
     "dependencies": {
-        "data-forge": "1.0.7"
+        "data-forge": "1.0.8"
     },
     "devDependencies": {
         "@types/chai": "4.0.4",
