@@ -81,6 +81,4 @@ function bollinger (this: ISeries<any, number>, period: number, stdDevMult: numb
         .inflate(pair => pair[1]);
 };
 
-console.log('wtf'); //fio:
-
 Series.prototype.bollinger = bollinger;
