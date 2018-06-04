@@ -23,11 +23,11 @@ export interface IBollingerBand {
 
 declare module "data-forge/build/lib/series" {
     interface ISeries<IndexT, ValueT> {
-        bollinger (period: number, stdDevMult: number): IDataFrame<any, IBollingerBand>;
+        bollinger (period: number, stdDevMultUpper: number, stdDevMultLower: number): IDataFrame<any, IBollingerBand>;
     }
 
     interface Series<IndexT, ValueT> {
-        bollinger (period: number, stdDevMult: number): IDataFrame<any, IBollingerBand>;
+        bollinger (period: number, stdDevMultUpper: number, stdDevMultLower: number): IDataFrame<any, IBollingerBand>;
     }
 }
 
@@ -35,14 +35,16 @@ declare module "data-forge/build/lib/series" {
  * Compute bollinger bands for a input series for a specified period of time.
  *
  * @param period - The time period for which to compute bollinger bands.
- * @param stdDevMult - The multiple of std dev used to compute upper and lower bands.
+ * @param stdDevMultUpper - The multiple of std dev used to compute the upper band.
+ * @param stdDevMultLower - The multiple of std dev used to compute the lower band.
  * 
  * @returns Returns a dataframe with columns value, upper, middle, lower, and stddev.
  */
-function bollinger<IndexT = any> (this: ISeries<IndexT, number>, period: number, stdDevMult: number): IDataFrame<IndexT, IBollingerBand> {
+function bollinger<IndexT = any> (this: ISeries<IndexT, number>, period: number, stdDevMultUpper: number, stdDevMultLower: number): IDataFrame<IndexT, IBollingerBand> {
 
     assert.isNumber(period, "Expected 'period' parameter to 'Series.bollinger' to be a number that specifies the time period of the moving average.");
-    assert.isNumber(stdDevMult, "Expected 'stdDevMult' parameter to 'Series.bollinger' to be a number that specifies the time period of the moving average.");
+    assert.isNumber(stdDevMultUpper, "Expected 'stdDevMultUpper' parameter to 'Series.bollinger' to be a number that specifies multipler to compute the upper band from the standard deviation.");
+    assert.isNumber(stdDevMultLower, "Expected 'stdDevMultLower' parameter to 'Series.bollinger' to be a number that specifies multipler to compute the upper band from the standard deviation.");
 
     const pairs: [IndexT, IBollingerBand][] = this.rollingWindow(period)
         .select<[IndexT, IBollingerBand]>(window => {
@@ -55,8 +57,8 @@ function bollinger<IndexT = any> (this: ISeries<IndexT, number>, period: number,
             
             var bollingerRecord: IBollingerBand = {
                 middle: avg,
-                upper: avg + (stddev * stdDevMult),
-                lower: avg - (stddev * stdDevMult),
+                upper: avg + (stddev * stdDevMultUpper),
+                lower: avg - (stddev * stdDevMultLower),
             }
 
             return [

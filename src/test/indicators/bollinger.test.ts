@@ -8,7 +8,7 @@ describe('bollinger', () => {
     it('bollinger', () => {
 
         const series = new Series({ index: [10, 20, 30, 40, 50, 60, 70], values: [5, 8, 15, 12, 22, 16, 9] });
-        const bollinger = series.bollinger(3, 2);
+        const bollinger = series.bollinger(3, 2, 2);
 
         expect(bollinger.toArray()).to.eql([{
                 middle: 9.333333333333334,
