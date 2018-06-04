@@ -49,13 +49,13 @@ declare module "data-forge/build/lib/series" {
  * 
  * @returns Returns a dataframe with columns value, upper, middle, lower, and stddev.
  */
-function bollinger (this: ISeries<any, number>, period: number, stdDevMult: number): IDataFrame<any, IBollingerRecord> {
+function bollinger<IndexT = any> (this: ISeries<IndexT, number>, period: number, stdDevMult: number): IDataFrame<IndexT, IBollingerRecord> {
 
     assert.isNumber(period, "Expected 'period' parameter to 'Series.bollinger' to be a number that specifies the time period of the moving average.");
     assert.isNumber(stdDevMult, "Expected 'stdDevMult' parameter to 'Series.bollinger' to be a number that specifies the time period of the moving average.");
 
-    return this.rollingWindow(period)
-        .select(window => {
+    const pairs: [IndexT, IBollingerRecord][] = this.rollingWindow(period)
+        .select<[IndexT, IBollingerRecord]>(window => {
             // http://stackoverflow.com/a/2253903/25868
             const count = window.count(); //todo: want a helper for std dev.
 
@@ -77,8 +77,9 @@ function bollinger (this: ISeries<any, number>, period: number, stdDevMult: numb
                 bollingerRecord
             ];
         })
-        .withIndex(pair => pair[0])
-        .inflate(pair => pair[1]);
+        .toArray(); //TODO: Shouldn't need this. Something is wrong downstream that causes the selector to be evaluated way too many times.
+
+    return new DataFrame<IndexT, IBollingerRecord>({ pairs: pairs });
 };
 
 Series.prototype.bollinger = bollinger;
