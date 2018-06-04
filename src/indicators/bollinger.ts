@@ -4,12 +4,7 @@ import { ISeries, Series, DataFrame, IDataFrame } from 'data-forge';
 /**
  * A record in the output bollinger bands dataframe.
  */
-export interface IBollingerRecord {
-    /***
-     * Last value.
-     */
-    value: number;
-
+export interface IBollingerBand {
     /**
      * Middle value in the bollinger band, the average value for the particular period.
      */
@@ -24,20 +19,15 @@ export interface IBollingerRecord {
      * The upper value. middle - (standard deviations x X).
      */
     lower: number;
-
-    /**
-     * The standard deviation of values for the particular period.
-     */
-    stddev: number;
 }
 
 declare module "data-forge/build/lib/series" {
     interface ISeries<IndexT, ValueT> {
-        bollinger (period: number, stdDevMult: number): IDataFrame<any, IBollingerRecord>;
+        bollinger (period: number, stdDevMult: number): IDataFrame<any, IBollingerBand>;
     }
 
     interface Series<IndexT, ValueT> {
-        bollinger (period: number, stdDevMult: number): IDataFrame<any, IBollingerRecord>;
+        bollinger (period: number, stdDevMult: number): IDataFrame<any, IBollingerBand>;
     }
 }
 
@@ -49,27 +39,24 @@ declare module "data-forge/build/lib/series" {
  * 
  * @returns Returns a dataframe with columns value, upper, middle, lower, and stddev.
  */
-function bollinger<IndexT = any> (this: ISeries<IndexT, number>, period: number, stdDevMult: number): IDataFrame<IndexT, IBollingerRecord> {
+function bollinger<IndexT = any> (this: ISeries<IndexT, number>, period: number, stdDevMult: number): IDataFrame<IndexT, IBollingerBand> {
 
     assert.isNumber(period, "Expected 'period' parameter to 'Series.bollinger' to be a number that specifies the time period of the moving average.");
     assert.isNumber(stdDevMult, "Expected 'stdDevMult' parameter to 'Series.bollinger' to be a number that specifies the time period of the moving average.");
 
-    const pairs: [IndexT, IBollingerRecord][] = this.rollingWindow(period)
-        .select<[IndexT, IBollingerRecord]>(window => {
+    const pairs: [IndexT, IBollingerBand][] = this.rollingWindow(period)
+        .select<[IndexT, IBollingerBand]>(window => {
             // http://stackoverflow.com/a/2253903/25868
             const count = window.count(); //todo: want a helper for std dev.
 
             const avg = window.average();
             const sum = window.select(value => (value - avg) * (value - avg)).sum();
             const stddev = Math.sqrt(sum / count);
-
             
-            var bollingerRecord: IBollingerRecord = {
-                value: window.last(),
+            var bollingerRecord: IBollingerBand = {
                 middle: avg,
                 upper: avg + (stddev * stdDevMult),
                 lower: avg - (stddev * stdDevMult),
-                stddev: stddev,
             }
 
             return [
@@ -79,7 +66,7 @@ function bollinger<IndexT = any> (this: ISeries<IndexT, number>, period: number,
         })
         .toArray(); //TODO: Shouldn't need this. Something is wrong downstream that causes the selector to be evaluated way too many times.
 
-    return new DataFrame<IndexT, IBollingerRecord>({ pairs: pairs });
+    return new DataFrame<IndexT, IBollingerBand>({ pairs: pairs });
 };
 
 Series.prototype.bollinger = bollinger;
