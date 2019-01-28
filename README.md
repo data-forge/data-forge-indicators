@@ -6,6 +6,13 @@ Need to learn data wrangling? See my book [Data Wrangling with JavaScript](http:
 
 Do prototyping and data analysis in JavaScript with [Data-Forge Notebook](http://www.data-forge-notebook.com/).
 
+## Indicators supported
+
+- Simple moving average
+- Bollinger bands
+
+MORE INDICATORS COMING SOON
+
 ## Setup
 
 Install Data-Forge, Data-Forge Indicators and auxilary modules via npm:
