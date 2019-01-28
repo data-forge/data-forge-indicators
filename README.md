@@ -69,7 +69,7 @@ You can preview your data in [Data-Forge Notebook](http://www.data-forge-noteboo
 display(withMovingAverage.tail(5));
 ```
 
-![Input data merged with moving average](/images/sma-preview.png)
+![Input data merged with moving average](https://raw.githubusercontent.com/data-forge/data-forge-indicators/master/images/sma-preview.pngsma-preview.png)
 
 You can plot the moving average and compare to the source data using Data-Forge Plot:
 
@@ -86,7 +86,7 @@ display(plot);
 
 The rendered chart looks like this: 
 
-![Simple moving average chart](/images/sma.png)
+![Simple moving average chart](https://raw.githubusercontent.com/data-forge/data-forge-indicators/masterhttps://raw.githubusercontent.com/data-forge/data-forge-indicators/master/images/sma-preview.pngsma-preview.pngsma.png)
 
 ## Bollinger bands
 
@@ -105,7 +105,7 @@ You can preview your data in [Data-Forge Notebook](http://www.data-forge-noteboo
 display(bollingerBands.tail(5));
 ```
 
-![Bollinger bands table preview](/images/bollinger-preview.png)
+![Bollinger bands table preview](https://raw.githubusercontent.com/data-forge/data-forge-indicators/master/images/sma-preview.pngbollinger-preview.png)
 
 To compare Bollinger Bands to the closing price, merge the closing price data series into the bollinger bands dataframe:
 
@@ -120,4 +120,4 @@ You can render a chart using Data-Forge Plot or [Data-Forge Notebook](http://www
 
 The chart looks like this:
 
-![Bollinger bands chart](/images/bollinger-chart.png)
+![Bollinger bands chart](https://raw.githubusercontent.com/data-forge/data-forge-indicators/master/images/sma-preview.pngbollinger-chart.png)
