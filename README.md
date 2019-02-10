@@ -8,8 +8,12 @@ Do prototyping and data analysis in JavaScript with [Data-Forge Notebook](http:/
 
 ## Indicators supported
 
-- Simple moving average
-- Bollinger bands
+- Simple moving average (`sma`)
+- Exponential moving average (`ema`)
+- Bollinger bands (`bollinger`)
+- Market direction (`direction`)
+- Market extrema (`extrema`)
+- Market trends (`trends`)
 
 MORE INDICATORS COMING SOON
 
@@ -170,3 +174,16 @@ const extrema = inputSeries
     .extrema();
 ```
 
+## Market trends
+
+The `trends` function builds on the `extrema` function to detect trends in the market. It returns a series of -1 and 1 values to tell you when the series is in downtrend or uptrend.
+
+```javascript
+const trends = inputSeries
+    .deflate(row => row.close)
+    .trends();
+```
+
+An uptrend is defined as a series of higher troughs.
+
+A downtrend is defined as a series of lower peaks.
