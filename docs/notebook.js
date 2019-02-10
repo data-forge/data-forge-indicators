@@ -10888,6 +10888,14 @@ const notebook = {
                     }
                 ],
                 "errors": []
+            },
+            {
+                "id": "db8ea610-2d85-11e9-9abc-575f7b982c7e",
+                "cellType": "markdown",
+                "code": "# More indicators coming soon!\r\n\r\n[Please follow me on Twitter](https://twitter.com/ashleydavis75) to stay up to date.",
+                "lastEvaluationDate": "2019-02-11T08:48:45.104+10:00",
+                "output": [],
+                "errors": []
             }
         ]
     }
