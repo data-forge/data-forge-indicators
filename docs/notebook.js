@@ -7,7 +7,7 @@ const notebook = {
             {
                 "id": "31e983b0-daf5-11e8-831f-d150615bd7aa",
                 "cellType": "markdown",
-                "code": "# Example of finanicial indicators\r\n\r\nThis notebook demonstrates financial indicators using [Data-Forge](https://www.npmjs.com/package/data-forge) and [Data-Forge Indicators](https://www.npmjs.com/package/data-forge-indicators).",
+                "code": "# Examples of financial indicators\r\n\r\nThis notebook demonstrates financial indicators using [Data-Forge](https://www.npmjs.com/package/data-forge) and [Data-Forge Indicators](https://www.npmjs.com/package/data-forge-indicators).",
                 "lastEvaluationDate": "2018-11-16T15:53:20.087+10:00",
                 "output": [],
                 "errors": []
@@ -25,7 +25,7 @@ const notebook = {
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const dataForge = require('data-forge');\r\nrequire('data-forge-fs');\r\nrequire('data-forge-plot');\r\nrequire('data-forge-indicators');\r\n\r\nlet inputSeries = (await dataForge.readFile(\"STW.csv\").parseCSV())\r\n    .parseDates(\"date\", \"DD/MM/YYYY\")\r\n    .parseFloats([\"open\", \"high\", \"low\", \"close\", \"volume\"])\r\n    .setIndex(\"date\") // Index so we can later merge on date.\r\n    .renameSeries({ date: \"time\" })\r\n    .bake();\r\n\r\ndisplay(inputSeries.head(5));",
-                "lastEvaluationDate": "2019-02-11T08:22:11.997+10:00",
+                "lastEvaluationDate": "2019-02-11T08:42:03.871+10:00",
                 "output": [
                     {
                         "values": [
@@ -120,7 +120,7 @@ const notebook = {
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const simpleMovingAverage = inputSeries\r\n    .deflate(bar => bar.close)  // Extract closing price series.\r\n    .sma(30)                    // 30 day simple moving average.\r\n    .bake();\r\n\r\nconst withSMA = inputSeries\r\n    .skip(30)                                   // Skip blank sma entries.\r\n    .withSeries(\"sma\", simpleMovingAverage)     // Integrate simple moving average into source data, indexed on date.\r\n    .bake();\r\n\r\ndisplay(withSMA.tail(200).plot({}, { y: [\"close\", \"sma\"] }));",
-                "lastEvaluationDate": "2019-02-11T08:22:12.026+10:00",
+                "lastEvaluationDate": "2019-02-11T08:42:03.953+10:00",
                 "output": [
                     {
                         "values": [
@@ -2411,7 +2411,7 @@ const notebook = {
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const exponentialMovingAverage = inputSeries\r\n    .deflate(bar => bar.close)  // Extract closing price series.\r\n    .ema(30)                    // 30 day exponential moving average.\r\n    .bake();\r\n\r\nconst withEMA = withSMA\r\n    .withSeries(\"ema\", exponentialMovingAverage)    // Integrate moving average into source data, indexed on date.\r\n    .bake();\r\n\r\ndisplay(withEMA.tail(200).plot({}, { y: [\"close\", \"sma\", \"ema\"] }));",
-                "lastEvaluationDate": "2019-02-11T08:22:12.038+10:00",
+                "lastEvaluationDate": "2019-02-11T08:42:03.983+10:00",
                 "output": [
                     {
                         "values": [
@@ -4907,7 +4907,7 @@ const notebook = {
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const bollingerBands = inputSeries\r\n    .deflate(bar => bar.close)  // Extract closing price series.\r\n    .bollinger(20, 2, 2)        // 20 days with bands at 2 standard deviations.\r\n    .bake();\r\n\r\nconst withBollingerBands = bollingerBands\r\n    .withSeries(\"close\",\r\n        inputSeries.deflate(row => row.close)\r\n    );\r\n\r\ndisplay(withBollingerBands.tail(200).plot({}, {}));",
-                "lastEvaluationDate": "2019-02-11T08:22:12.051+10:00",
+                "lastEvaluationDate": "2019-02-11T08:42:04.015+10:00",
                 "output": [
                     {
                         "values": [
@@ -6598,7 +6598,7 @@ const notebook = {
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const gaps = inputSeries.gaps();\r\ndisplay(gaps.tail(200).plot({ chartType: \"bar\" }));",
-                "lastEvaluationDate": "2019-02-11T08:22:12.059+10:00",
+                "lastEvaluationDate": "2019-02-11T08:42:04.047+10:00",
                 "output": [
                     {
                         "values": [
@@ -7674,7 +7674,7 @@ const notebook = {
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const monthlyDirection = inputSeries.deflate(row => row.close).direction(30); \r\ndisplay(monthlyDirection.tail(200).plot({ chartType: \"bar\" }));",
-                "lastEvaluationDate": "2019-02-11T08:22:12.064+10:00",
+                "lastEvaluationDate": "2019-02-11T08:42:04.066+10:00",
                 "output": [
                     {
                         "values": [
@@ -8750,7 +8750,7 @@ const notebook = {
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const extrema = inputSeries.deflate(row => row.close).extrema();\r\ndisplay(extrema.tail(200).plot({ chartType: \"bar\" }));",
-                "lastEvaluationDate": "2019-02-11T08:22:12.072+10:00",
+                "lastEvaluationDate": "2019-02-11T08:42:04.079+10:00",
                 "output": [
                     {
                         "values": [
@@ -9826,7 +9826,7 @@ const notebook = {
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const trends = inputSeries.deflate(row => row.close).trends();\r\ndisplay(trends.tail(200).plot({ chartType: \"bar\" }))",
-                "lastEvaluationDate": "2019-02-11T08:22:12.078+10:00",
+                "lastEvaluationDate": "2019-02-11T08:42:04.090+10:00",
                 "output": [
                     {
                         "values": [
