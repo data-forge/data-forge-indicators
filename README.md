@@ -142,3 +142,20 @@ const gaps = inputSeries.gaps();
 console.log(gaps.toArray());
 ```
 
+## Market direction
+
+The `direction` function allows you test the direction of a time series over time.
+
+```javascript
+const dailyDirection = inputSeries
+    .deflate(row => row.close)
+    .direction(2);
+```
+
+```javascript
+const monthlyDirection = inputSeries
+    .deflate(row => row.close)
+    .direction(30);
+```
+
+The result is a series of -1, 0 and 1 values that indicate the direction of the value (down, flat or up) for the particular time period.
