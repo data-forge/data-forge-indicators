@@ -2,6 +2,8 @@
 
 Financial and quantitative trading indicators for use with [Data-Forge](http://www.data-forge-js.com/).
 
+[Please click here for a graphical example of all indicators](https://data-forge.github.io/data-forge-indicators/).
+
 Need to learn data wrangling? See my book [Data Wrangling with JavaScript](http://bit.ly/2t2cJu2) or blog [The Data Wrangler](http://www.the-data-wrangler.com/).
 
 Do prototyping and data analysis in JavaScript with [Data-Forge Notebook](http://www.data-forge-notebook.com/).
