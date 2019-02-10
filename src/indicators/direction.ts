@@ -1,6 +1,10 @@
 import { assert } from 'chai';
 import { ISeries, Series } from 'data-forge';
 
+//
+// Determine the rolling direction of the series for the specified period.
+//
+
 declare module "data-forge/build/lib/series" {
     interface ISeries<IndexT, ValueT> {
         direction (period: number): ISeries<IndexT, ValueT>;

@@ -13,15 +13,15 @@ describe('gaps', () => {
         const df = await dataForge.readFile("./src/test/data/STW.csv")
             .parseCSV({ dynamicTyping: true });
 
-        const gaps = df.gaps().toArray();
+        const values = df.gaps().toPairs();
 
         const outputFilePath = path.join(__dirname, "output", this.test.fullTitle() + ".json");
         
         // To write new output:
-        //await writeJSON(outputFilePath, gaps);
+        //await writeJSON(outputFilePath, values);
 
         const expectedOutput = await readJSON(outputFilePath);
-        expect(gaps).to.eql(expectedOutput);
+        expect(values).to.eql(expectedOutput);
     });
 
 });

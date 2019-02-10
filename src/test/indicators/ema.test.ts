@@ -13,15 +13,15 @@ describe('ema', () => {
         const df = await dataForge.readFile("./src/test/data/STW.csv")
             .parseCSV({ dynamicTyping: true });
 
-        const ema = df.deflate(row => row.close).ema(30).toArray();
+        const values = df.deflate(row => row.close).ema(30).toPairs();
 
         const outputFilePath = path.join(__dirname, "output", this.test.fullTitle() + ".json");
         
         // To write new output:
-        //await writeJSON(outputFilePath, ema);
+        //await writeJSON(outputFilePath, values);
 
         const expectedOutput = await readJSON(outputFilePath);
-        expect(ema).to.eql(expectedOutput);
+        expect(values).to.eql(expectedOutput);
     });
 
 });

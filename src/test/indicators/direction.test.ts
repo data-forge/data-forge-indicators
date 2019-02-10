@@ -13,7 +13,7 @@ describe('direction', () => {
         const df = await dataForge.readFile("./src/test/data/STW.csv")
             .parseCSV({ dynamicTyping: true });
 
-        const values = df.deflate(row => row.close).direction(30).toArray();
+        const values = df.deflate(row => row.close).direction(30).toPairs();
 
         const outputFilePath = path.join(__dirname, "output", this.test.fullTitle() + ".json");
         

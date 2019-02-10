@@ -144,7 +144,7 @@ console.log(gaps.toArray());
 
 ## Market direction
 
-The `direction` function allows you test the direction of a time series over time.
+The `direction` function allows you test the direction of a series.
 
 ```javascript
 const dailyDirection = inputSeries
@@ -159,3 +159,14 @@ const monthlyDirection = inputSeries
 ```
 
 The result is a series of -1, 0 and 1 values that indicate the direction of the value (down, flat or up) for the particular time period.
+
+## Market extrema
+
+The `extrema` function builds on the `direction` function to pick out minima (troughs) and maxima (peaks) in the series.
+
+```javascript
+const extrema = inputSeries
+    .deflate(row => row.close)
+    .extrema();
+```
+

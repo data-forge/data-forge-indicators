@@ -6,14 +6,14 @@ import "../../index";
 import * as path from 'path';
 import { readJSON, writeJSON } from './test-utils';
 
-describe('sma', () => {
+describe('extrema', () => {
 
-    it('simple moving average', async function () {
+    it('extrema', async function () {
 
         const df = await dataForge.readFile("./src/test/data/STW.csv")
             .parseCSV({ dynamicTyping: true });
 
-        const values = df.deflate(row => row.close).sma(30).toPairs();
+        const values = df.deflate(row => row.close).extrema().toPairs();
 
         const outputFilePath = path.join(__dirname, "output", this.test.fullTitle() + ".json");
         
