@@ -128,3 +128,15 @@ You can render a chart using Data-Forge Plot or [Data-Forge Notebook](http://www
 The chart looks like this:
 
 ![Bollinger bands chart](https://raw.githubusercontent.com/data-forge/data-forge-indicators/master/images/bollinger-chart.png)
+
+## Gaps
+
+Use the gaps function to compute percentage gap between close and open of subsequent days/bars.
+
+To use this functon your input dataframe must have open, high, low and close (OHLC) fields.
+
+```javascript
+const gaps = inputSeries.gaps();
+console.log(gaps.toArray());
+```
+

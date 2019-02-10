@@ -1,6 +1,6 @@
 {
     "name": "data-forge-indicators",
-    "version": "0.1.11",
+    "version": "0.1.13",
     "description": "Financial indicators for use with Data-Forge.",
     "main": "build/index.js",
     "types": "build/index.d.ts",
@@ -11,7 +11,7 @@
         "build:watch": "tsc --watch",
         "clean-build:watch": "rm -rf build/* && tsc --watch",
         "test": "nyc mocha --opts ./src/test/mocha.opts",
-        "test:watch": "nyc mocha --watch --watch-extensions ts --opts ./src/test/mocha.opts",
+        "test:watch": "mocha --watch --watch-extensions ts --opts ./src/test/mocha.opts",
         "prepublishOnly": "tsc"
     },
     "repository": {
@@ -34,6 +34,7 @@
         "@types/mocha": "2.2.43",
         "@types/node": "8.0.28",
         "chai": "4.1.2",
+        "data-forge-fs": "0.0.3",
         "mocha": "3.5.3",
         "nyc": "11.8.0",
         "source-map-support": "0.5.6",
