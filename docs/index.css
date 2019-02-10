@@ -1,0 +1,100 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.container {
+    width: calc(100% - 30px);
+    margin: auto;
+}
+
+.output-border {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.85em;
+    border: 1px dashed #999;
+    border-top: none;
+    padding: 4px;
+    overflow: "hidden";
+}
+
+.cell-border {
+    font-family: 'Source Code Pro', monospace;
+    padding-left: 6px;
+    border: 1px dashed #999;
+}
+
+.chart-placeholder {
+    width: 100%
+}
+
+.cell-error > .output-border {
+    border-color: red;
+    color: red;
+    padding: 8px;
+}
+
+table {
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+}
+
+td, th {
+    white-space: nowrap;
+    border: 1px solid #ddd;
+    padding: 7px;
+}
+
+th {
+    background-color: #eee;
+}
+
+tbody tr td:first-of-type {
+    background-color: #eee;
+}     
+
+iframe {
+    height: 600px;
+    width: 100%;
+    border: 0;
+}
+
+.center {
+    text-align: center;
+}
+
+.general-output .output-border {
+    background-color: #FDFDFD;
+}
+
+.json-output .output-border {
+    background-color: #FDFDFD;
+}
+
+.code-cell-with-output {
+    margin-bottom: 15px;
+}
+
+.code-cell .cell-border {
+    overflow: hidden;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+.flex-center-content {
+    justify-content: center;
+    align-items: center;
+}
+
