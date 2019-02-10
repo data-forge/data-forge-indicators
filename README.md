@@ -50,7 +50,7 @@ let inputSeries = dataForge.readFileSync("STW.csv")
     .bake();
 ```
 
-## Simple moving average 
+## Moving average 
 
 Use the `sma` function to compute a simple moving average of a data series:
 
@@ -94,6 +94,8 @@ display(plot);
 The rendered chart looks like this: 
 
 ![Simple moving average chart](https://raw.githubusercontent.com/data-forge/data-forge-indicators/master/images/sma.png)
+
+Also available is an `ema` function that works in the same way as `sma`.
 
 ## Bollinger bands
 
