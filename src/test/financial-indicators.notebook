@@ -1,0 +1,242 @@
+{
+    "version": 1,
+    "sheet": {
+        "id": "1f799620-d370-11e8-b62a-7b63438e3c42",
+        "cells": [
+            {
+                "id": "31e983b0-daf5-11e8-831f-d150615bd7aa",
+                "cellType": "markdown",
+                "code": "# Examples of financial indicators\r\n\r\nThis notebook demonstrates financial indicators using [Data-Forge](https://www.npmjs.com/package/data-forge) and [Data-Forge Indicators](https://www.npmjs.com/package/data-forge-indicators).",
+                "lastEvaluationDate": "2018-11-16T15:53:20.087+10:00",
+                "output": [],
+                "errors": []
+            },
+            {
+                "id": "1b3bb2a0-daf5-11e8-831f-d150615bd7aa",
+                "cellType": "markdown",
+                "code": "## Load some example data\r\n\r\nFirst let's load some example data using [Data-Forge's file system functions](https://www.npmjs.com/package/data-forge-fs).\r\n\r\nThe data used in this example is three years of daily prices for STW from 2015 to end 2017. STW is an exchange traded fund for the ASX 200.",
+                "lastEvaluationDate": "2018-11-16T15:53:20.087+10:00",
+                "output": [],
+                "errors": []
+            },
+            {
+                "id": "a4a43760-d375-11e8-b62a-7b63438e3c42",
+                "cellType": "code",
+                "cellScope": "global",
+                "code": "const dataForge = require('data-forge');\r\nrequire('data-forge-fs');\r\nrequire('data-forge-plot');\r\nrequire('../../build/index'); //TODO: This needs to load the TS file directly!\r\n\r\nlet inputSeries = (await dataForge.readFile(\"./data/STW.csv\").parseCSV())\r\n    .parseDates(\"date\", \"DD/MM/YYYY\")\r\n    .parseFloats([\"open\", \"high\", \"low\", \"close\", \"volume\"])\r\n    .setIndex(\"date\") // Index so we can later merge on date.\r\n    .renameSeries({ date: \"time\" })\r\n    .bake();\r\n\r\ndisplay(inputSeries.head(5));",
+                "lastEvaluationDate": "2019-02-13T07:31:19.757+10:00",
+                "output": [
+                    {
+                        "values": [
+                            {
+                                "data": {
+                                    "columnOrder": [
+                                        "time",
+                                        "open",
+                                        "high",
+                                        "low",
+                                        "close",
+                                        "volume"
+                                    ],
+                                    "columns": {
+                                        "time": "date",
+                                        "open": "number",
+                                        "high": "number",
+                                        "low": "number",
+                                        "close": "number",
+                                        "volume": "number"
+                                    },
+                                    "index": {
+                                        "type": "date",
+                                        "values": [
+                                            "2017-01-03T00:00:00.000+10:00",
+                                            "2017-01-04T00:00:00.000+10:00",
+                                            "2017-01-05T00:00:00.000+10:00",
+                                            "2017-01-06T00:00:00.000+10:00",
+                                            "2017-01-09T00:00:00.000+10:00"
+                                        ]
+                                    },
+                                    "values": [
+                                        {
+                                            "open": 52.97,
+                                            "high": 53.61,
+                                            "low": 52.97,
+                                            "close": 53.57,
+                                            "volume": 68555,
+                                            "time": "2017-01-03T00:00:00.000+10:00"
+                                        },
+                                        {
+                                            "open": 53.56,
+                                            "high": 53.61,
+                                            "low": 53.5,
+                                            "close": 53.55,
+                                            "volume": 98428,
+                                            "time": "2017-01-04T00:00:00.000+10:00"
+                                        },
+                                        {
+                                            "open": 53.71,
+                                            "high": 53.79,
+                                            "low": 53.69,
+                                            "close": 53.73,
+                                            "volume": 61875,
+                                            "time": "2017-01-05T00:00:00.000+10:00"
+                                        },
+                                        {
+                                            "open": 53.75,
+                                            "high": 53.83,
+                                            "low": 53.66,
+                                            "close": 53.74,
+                                            "volume": 137648,
+                                            "time": "2017-01-06T00:00:00.000+10:00"
+                                        },
+                                        {
+                                            "open": 53.82,
+                                            "high": 54.43,
+                                            "low": 53.82,
+                                            "close": 54.26,
+                                            "volume": 186224,
+                                            "time": "2017-01-09T00:00:00.000+10:00"
+                                        }
+                                    ]
+                                },
+                                "displayType": "dataframe"
+                            }
+                        ]
+                    }
+                ],
+                "errors": []
+            },
+            {
+                "id": "10105a70-daf5-11e8-831f-d150615bd7aa",
+                "cellType": "markdown",
+                "code": "## Simple moving average\r\n\r\nUse the `sma` function to compute a simple [moving average](https://en.wikipedia.org/wiki/Moving_average), and plot it for comparison against the source data.",
+                "lastEvaluationDate": "2018-11-16T15:53:20.094+10:00",
+                "output": [],
+                "errors": []
+            },
+            {
+                "id": "0a663bb0-22c3-11e9-b9f1-1307af2c4736",
+                "cellType": "code",
+                "cellScope": "global",
+                "code": "const simpleMovingAverage = inputSeries\r\n    .deflate(bar => bar.close)  // Extract closing price series.\r\n    .sma(30)                    // 30 day simple moving average.\r\n    .bake();\r\n\r\nconst withSMA = inputSeries\r\n    .skip(30)                                   // Skip blank sma entries.\r\n    .withSeries(\"sma\", simpleMovingAverage)     // Integrate simple moving average into source data, indexed on date.\r\n    .bake();\r\n\r\ndisplay(withSMA.tail(200).plot({}, { y: [\"close\", \"sma\"] }));",
+                "lastEvaluationDate": "2019-02-13T07:31:19.764+10:00",
+                "output": [],
+                "errors": [
+                    {
+                        "msg": "Error: inputSeries.deflate(...).sma is not a function\n    at <anonymous> (3:10)"
+                    }
+                ]
+            },
+            {
+                "id": "a44223d0-2d12-11e9-90b3-b5b1a5e6fa95",
+                "cellType": "markdown",
+                "code": "## Exponential moving average\r\n\r\nUse the `ema` function to compute an exponential [moving average](https://en.wikipedia.org/wiki/Moving_average), and plot it for comparison against the source data, including the simple moving average to see the difference between the different moving averages.",
+                "lastEvaluationDate": "2019-02-10T19:41:34.946+10:00",
+                "output": [],
+                "errors": []
+            },
+            {
+                "id": "b4358b60-2d12-11e9-90b3-b5b1a5e6fa95",
+                "cellType": "code",
+                "cellScope": "global",
+                "code": "const exponentialMovingAverage = inputSeries\r\n    .deflate(bar => bar.close)  // Extract closing price series.\r\n    .ema(30)                    // 30 day exponential moving average.\r\n    .bake();\r\n\r\nconst withEMA = withSMA\r\n    .withSeries(\"ema\", exponentialMovingAverage)    // Integrate moving average into source data, indexed on date.\r\n    .bake();\r\n\r\ndisplay(withEMA.tail(200).plot({}, { y: [\"close\", \"sma\", \"ema\"] }));",
+                "lastEvaluationDate": "2019-02-13T07:31:19.769+10:00",
+                "output": [],
+                "errors": []
+            },
+            {
+                "id": "7a6fdc80-22bf-11e9-b9f1-1307af2c4736",
+                "cellType": "markdown",
+                "code": "## Bollinger bands\r\n\r\nUse the `bollinger` function to compute [Bollinger Bands](https://en.wikipedia.org/wiki/Bollinger_Bands).",
+                "lastEvaluationDate": "2019-01-28T16:09:40.613+10:00",
+                "output": [],
+                "errors": []
+            },
+            {
+                "id": "ca561d90-22bf-11e9-b9f1-1307af2c4736",
+                "cellType": "code",
+                "cellScope": "global",
+                "code": "const bollingerBands = inputSeries\r\n    .deflate(bar => bar.close)  // Extract closing price series.\r\n    .bollinger(20, 2, 2)        // 20 days with bands at 2 standard deviations.\r\n    .bake();\r\n\r\nconst withBollingerBands = bollingerBands\r\n    .withSeries(\"close\",\r\n        inputSeries.deflate(row => row.close)\r\n    );\r\n\r\ndisplay(withBollingerBands.tail(200).plot({}, {}));",
+                "lastEvaluationDate": "2019-02-13T07:31:19.774+10:00",
+                "output": [],
+                "errors": []
+            },
+            {
+                "id": "01be6a60-2ce5-11e9-81f6-f744dfd58a59",
+                "cellType": "markdown",
+                "code": "## Gaps\r\n\r\nUse the `gaps` function to compute % gaps between days/bars. \r\n\r\nThis is the difference between close and open on subsequent days/bars expressed as a percentage relative to the first day.",
+                "lastEvaluationDate": "2019-02-10T13:38:56.924+10:00",
+                "output": [],
+                "errors": []
+            },
+            {
+                "id": "38669290-2ce5-11e9-81f6-f744dfd58a59",
+                "cellType": "code",
+                "cellScope": "global",
+                "code": "const gaps = inputSeries.gaps();\r\ndisplay(gaps.tail(200).plot({ chartType: \"bar\" }));",
+                "lastEvaluationDate": "2019-02-13T07:31:19.779+10:00",
+                "output": [],
+                "errors": []
+            },
+            {
+                "id": "3925adf0-2d13-11e9-90b3-b5b1a5e6fa95",
+                "cellType": "markdown",
+                "code": "## Market direction\r\n\r\nUse the `direction` function to test the direction of the market for specific periods.",
+                "lastEvaluationDate": "2019-02-10T19:41:34.946+10:00",
+                "output": [],
+                "errors": []
+            },
+            {
+                "id": "7f06c750-2d13-11e9-90b3-b5b1a5e6fa95",
+                "cellType": "code",
+                "cellScope": "global",
+                "code": "const monthlyDirection = inputSeries.deflate(row => row.close).direction(30); \r\ndisplay(monthlyDirection.tail(200).plot({ chartType: \"bar\" }));",
+                "lastEvaluationDate": "2019-02-13T07:31:19.784+10:00",
+                "output": [],
+                "errors": []
+            },
+            {
+                "id": "f7222770-2d13-11e9-90b3-b5b1a5e6fa95",
+                "cellType": "markdown",
+                "code": "## Peaks and troughs\r\n\r\nUse the `extrema` function to detect minimum and maximum in the series. \r\n\r\nYou can use this to find the peaks and throughs in the data series.",
+                "lastEvaluationDate": "2019-02-10T19:41:34.946+10:00",
+                "output": [],
+                "errors": []
+            },
+            {
+                "id": "14fd2100-2d14-11e9-90b3-b5b1a5e6fa95",
+                "cellType": "code",
+                "cellScope": "global",
+                "code": "const extrema = inputSeries.deflate(row => row.close).extrema();\r\ndisplay(extrema.tail(200).plot({ chartType: \"bar\" }));",
+                "lastEvaluationDate": "2019-02-13T07:31:19.791+10:00",
+                "output": [],
+                "errors": []
+            },
+            {
+                "id": "37c8e7a0-2d14-11e9-90b3-b5b1a5e6fa95",
+                "cellType": "markdown",
+                "code": "## Trend detection\r\n\r\nDetect uptrends and downtrends in a series using the `trends` function.",
+                "lastEvaluationDate": "2019-02-10T19:41:34.946+10:00",
+                "output": [],
+                "errors": []
+            },
+            {
+                "id": "4b1b58b0-2d14-11e9-90b3-b5b1a5e6fa95",
+                "cellType": "code",
+                "cellScope": "global",
+                "code": "const trends = inputSeries.deflate(row => row.close).trends();\r\ndisplay(trends.tail(200).plot({ chartType: \"bar\" }))",
+                "lastEvaluationDate": "2019-02-13T07:31:19.795+10:00",
+                "output": [],
+                "errors": []
+            },
+            {
+                "id": "db8ea610-2d85-11e9-9abc-575f7b982c7e",
+                "cellType": "markdown",
+                "code": "# More indicators coming soon!\r\n\r\n[Please follow me on Twitter](https://twitter.com/ashleydavis75) to stay up to date.",
+                "lastEvaluationDate": "2019-02-11T08:48:12.819+10:00",
+                "output": [],
+                "errors": []
+            }
+        ]
+    }
+}
