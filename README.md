@@ -16,6 +16,7 @@ Do prototyping and data analysis in JavaScript with [Data-Forge Notebook](http:/
 - Market direction (`direction`)
 - Market extrema (`extrema`)
 - Market trends (`trends`)
+- Slope (`slope`)
 
 MORE INDICATORS COMING SOON
 
@@ -189,3 +190,7 @@ const trends = inputSeries
 An uptrend is defined as a series of higher troughs.
 
 A downtrend is defined as a series of lower peaks.
+
+## Slope
+
+Use the `slope` function to measure the slope of the line segments 
