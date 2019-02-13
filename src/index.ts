@@ -6,3 +6,5 @@ import "./indicators/direction";
 import "./indicators/extrema";
 import "./indicators/trends";
 import "./indicators/percent-bandwidth";
+import "./indicators/days-falling";
+import "./indicators/days-rising";
