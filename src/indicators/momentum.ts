@@ -12,7 +12,8 @@ declare module "data-forge/build/lib/series" {
 }
 
 /**
- * Compute the momentum 
+ * Compute the momentum.
+ * https://en.wikipedia.org/wiki/Momentum_(technical_analysis)
  */
 
 function momentum<IndexT = any> (this: ISeries<IndexT, number>, period: number): ISeries<IndexT, number> {
