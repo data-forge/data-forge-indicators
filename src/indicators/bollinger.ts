@@ -6,6 +6,11 @@ import { ISeries, Series, DataFrame, IDataFrame } from 'data-forge';
  */
 export interface IBollingerBand {
     /**
+     * The value that the bollinger bands are derived from.
+     */
+    value: number;
+
+    /**
      * Middle value in the bollinger band, the average value for the particular period.
      */
     middle: number;
@@ -56,6 +61,7 @@ function bollinger<IndexT = any> (this: ISeries<IndexT, number>, period: number,
             const stddev = Math.sqrt(sum / count);
             
             var bollingerRecord: IBollingerBand = {
+                value: window.last(),
                 middle: avg,
                 upper: avg + (stddev * stdDevMultUpper),
                 lower: avg - (stddev * stdDevMultLower),
