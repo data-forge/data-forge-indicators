@@ -13,9 +13,11 @@ Do prototyping and data analysis in JavaScript with [Data-Forge Notebook](http:/
 - Simple moving average (`sma`)
 - Exponential moving average (`ema`)
 - Bollinger bands (`bollinger`)
+- Percent bandwidth or %b (`percentBandwidth`)
 - Market direction (`direction`)
 - Market extrema (`extrema`)
 - Market trends (`trends`)
+- Momentum (`momentum`)
 
 MORE INDICATORS COMING SOON
 
@@ -201,4 +203,10 @@ An uptrend is defined as a series of higher troughs.
 
 A downtrend is defined as a series of lower peaks.
 
+## Momentum
 
+Compute [momentum](https://en.wikipedia.org/wiki/Momentum_(technical_analysis)) using the `momentum` function.
+
+```javascript
+const momentum = inputSeries.deflate(row => row.close).momentum(30);
+```

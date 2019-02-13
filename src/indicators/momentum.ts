@@ -1,0 +1,27 @@
+import { assert } from 'chai';
+import { ISeries, Series } from 'data-forge';
+
+declare module "data-forge/build/lib/series" {
+    interface ISeries<IndexT, ValueT> {
+        momentum (period: number): ISeries<IndexT, ValueT>;
+    }
+
+    interface Series<IndexT, ValueT> {
+        momentum (period: number): ISeries<IndexT, ValueT>;
+    }
+}
+
+/**
+ * Compute the momentum 
+ */
+
+function momentum<IndexT = any> (this: ISeries<IndexT, number>, period: number): ISeries<IndexT, number> {
+	assert.isNumber(period, "Expected 'period' parameter to 'Series.momentum' to be a number that specifies the time period for computing momentum.");
+
+    return this.rollingWindow(period)
+        .select<[IndexT, number]>(window => [window.getIndex().last(), window.last() - window.first()])
+        .withIndex(pair => pair[0])
+        .select(pair => pair[1]);
+}
+
+Series.prototype.momentum = momentum;

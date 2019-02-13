@@ -8,3 +8,4 @@ import "./indicators/trends";
 import "./indicators/percent-bandwidth";
 import "./indicators/days-falling";
 import "./indicators/days-rising";
+import "./indicators/momentum";
