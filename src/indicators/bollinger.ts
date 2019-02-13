@@ -45,17 +45,21 @@ declare module "data-forge/build/lib/series" {
  * 
  * @returns Returns a dataframe with columns value, upper, middle, lower, and stddev.
  */
-function bollinger<IndexT = any> (this: ISeries<IndexT, number>, period: number, stdDevMultUpper: number, stdDevMultLower: number): IDataFrame<IndexT, IBollingerBand> {
+function bollinger<IndexT = any> (
+    this: ISeries<IndexT, number>, 
+    period: number, 
+    stdDevMultUpper: number, 
+    stdDevMultLower: number
+    ): IDataFrame<IndexT, IBollingerBand> {
 
     assert.isNumber(period, "Expected 'period' parameter to 'Series.bollinger' to be a number that specifies the time period of the moving average.");
     assert.isNumber(stdDevMultUpper, "Expected 'stdDevMultUpper' parameter to 'Series.bollinger' to be a number that specifies multipler to compute the upper band from the standard deviation.");
     assert.isNumber(stdDevMultLower, "Expected 'stdDevMultLower' parameter to 'Series.bollinger' to be a number that specifies multipler to compute the upper band from the standard deviation.");
 
-    const pairs: [IndexT, IBollingerBand][] = this.rollingWindow(period)
+    return this.rollingWindow(period)
         .select<[IndexT, IBollingerBand]>(window => {
             // http://stackoverflow.com/a/2253903/25868
             const count = window.count(); //todo: want a helper for std dev.
-
             const avg = window.average();
             const sum = window.select(value => (value - avg) * (value - avg)).sum();
             const stddev = Math.sqrt(sum / count);
@@ -72,9 +76,8 @@ function bollinger<IndexT = any> (this: ISeries<IndexT, number>, period: number,
                 bollingerRecord
             ];
         })
-        .toArray(); //TODO: Shouldn't need this. Something is wrong downstream that causes the selector to be evaluated way too many times.
-
-    return new DataFrame<IndexT, IBollingerBand>({ pairs: pairs });
+        .withIndex(pair => pair[0])
+        .inflate(pair => pair[1]);
 };
 
 Series.prototype.bollinger = bollinger;
