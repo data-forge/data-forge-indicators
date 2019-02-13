@@ -137,6 +137,17 @@ The chart looks like this:
 
 ![Bollinger bands chart](https://raw.githubusercontent.com/data-forge/data-forge-indicators/master/images/bollinger-chart.png)
 
+## Percent bandwidth
+
+[Percent bandwidth](https://en.wikipedia.org/wiki/Bollinger_Bands#Indicators_derived_from_Bollinger_Bands) or %b is an indicator dervied from Bollinger Bands. It shows where price is in relation to the bands with values at 1 for the upper band and 0 for the lower band.
+
+```javascript
+const percentB = = inputSeries
+    .deflate(bar => bar.close)
+    .bollinger(20, 2, 2)        // Need Bollinger Bands first.
+    .percentBandwidth();
+```
+
 ## Gaps
 
 Use the gaps function to compute percentage gap between close and open of subsequent days/bars.
@@ -189,3 +200,5 @@ const trends = inputSeries
 An uptrend is defined as a series of higher troughs.
 
 A downtrend is defined as a series of lower peaks.
+
+
