@@ -10,3 +10,4 @@ import "./indicators/days-falling";
 import "./indicators/days-rising";
 import "./indicators/momentum";
 import "./indicators/rate-of-change";
+import "./indicators/rsi";
