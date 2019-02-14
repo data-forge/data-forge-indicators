@@ -3,19 +3,20 @@ import { ISeries, Series } from 'data-forge';
 
 declare module "data-forge/build/lib/series" {
     interface ISeries<IndexT, ValueT> {
-        sma (period: number): ISeries<IndexT, ValueT>;
+        sma(period: number): ISeries<IndexT, number>;
     }
 
     interface Series<IndexT, ValueT> {
-        sma (period: number): ISeries<IndexT, ValueT>;
+        sma(period: number): ISeries<IndexT, number>;
     }
 }
 
-function sma (this: ISeries<any, any>, period: number): ISeries<any, any> {
+function sma<IndexT = any>(this: ISeries<IndexT, number>, period: number): ISeries<IndexT, number> {
+
 	assert.isNumber(period, "Expected 'period' parameter to 'Series.sma' to be a number that specifies the time period of the moving average.");
 
     return this.rollingWindow(period)
-        .select(window => [window.getIndex().last(), window.average()])
+        .select<[IndexT, number]>(window => [window.getIndex().last(), window.average()])
         .withIndex(pair => pair[0])
         .select(pair => pair[1]);
 }

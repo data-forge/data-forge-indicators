@@ -7,19 +7,19 @@ import { ISeries, Series } from 'data-forge';
 
 declare module "data-forge/build/lib/series" {
     interface ISeries<IndexT, ValueT> {
-        direction (period: number): ISeries<IndexT, ValueT>;
+        direction(period: number): ISeries<IndexT, number>;
     }
 
     interface Series<IndexT, ValueT> {
-        direction (period: number): ISeries<IndexT, ValueT>;
+        direction(period: number): ISeries<IndexT, number>;
     }
 }
 
-function direction (this: ISeries<any, any>, period: number = 2): ISeries<any, any> {
+function direction<IndexT = any>(this: ISeries<IndexT, number>, period: number = 2): ISeries<IndexT, number> {
 	assert.isNumber(period, "Expected 'period' parameter to 'Series.direction' to be a number that specifies the time period for the direction test.");
 
     return this.rollingWindow(2)
-        .select(window => [
+        .select<[IndexT, number]>(window => [
             window.getIndex().last(),
             Math.sign(window.last() - window.first()),
         ])

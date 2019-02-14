@@ -13,6 +13,7 @@ declare module "data-forge/build/lib/dataframe" {
 }
 
 function rsi<IndexT = any>(this: IDataFrame<IndexT, OHLC>, period: number): ISeries<IndexT, number> {
+    
 	assert.isNumber(period, "Expected 'period' parameter to 'DataFrame.rsi' to be a number that specifies the time period for computation of the relative strength index.");
 
     return this.rollingWindow(period)

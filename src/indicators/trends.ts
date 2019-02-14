@@ -3,15 +3,15 @@ import { ISeries, Series } from 'data-forge';
 
 declare module "data-forge/build/lib/series" {
     interface ISeries<IndexT, ValueT> {
-        trends (): ISeries<IndexT, ValueT>;
+        trends(): ISeries<IndexT, number>;
     }
 
     interface Series<IndexT, ValueT> {
-        trends (): ISeries<IndexT, ValueT>;
+        trends(): ISeries<IndexT, number>;
     }
 }
 
-function trends (this: ISeries<any, any>): ISeries<any, any> {
+function trends<IndexT = any>(this: ISeries<IndexT, number>): ISeries<IndexT, number> {
 
     const extrema = this.extrema();
     var df = this.inflate(value => ({ 
@@ -22,7 +22,7 @@ function trends (this: ISeries<any, any>): ISeries<any, any> {
     var downTrend = df
         .where((row: any) => row.extrema > 0)
         .rollingWindow(2)
-        .select(window => {
+        .select<[IndexT, number]>(window => {
             if (window.count() < 2) {
                 return [window.getIndex().last(), 0];
             }
@@ -42,7 +42,7 @@ function trends (this: ISeries<any, any>): ISeries<any, any> {
     var upTrend = df
         .where((row: any) => row.extrema < 0)
         .rollingWindow(2)
-        .select(window => {
+        .select<[IndexT, number]>(window => {
             if (window.count() < 2) {
                 return [window.getIndex().last(), 0];
             }
@@ -65,7 +65,7 @@ function trends (this: ISeries<any, any>): ISeries<any, any> {
         .withSeries("Uptrend", upTrend)
         .withSeries("Downtrend", downTrend)
         .deflate((row: any) => row.Uptrend && row.Uptrend || row.Downtrend)
-        .select(function (value) {
+        .select((value) => {
                if (typeof(value) === "number" && value < 0 || value > 0) {
                 prevTrendValue = value;
                 return value;

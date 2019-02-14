@@ -5,18 +5,18 @@ import { OHLC } from './ohlc';
 
 declare module "data-forge/build/lib/dataframe" {
     interface IDataFrame<IndexT, ValueT> {
-        gaps (): ISeries<IndexT, number>;
+        gaps(): ISeries<IndexT, number>;
     }
 
     interface DataFrame<IndexT, ValueT> {
-        gaps (): ISeries<IndexT, number>;
+        gaps(): ISeries<IndexT, number>;
     }
 }
 
-function gaps (this: IDataFrame<any, OHLC>): ISeries<any, number> {
+function gaps<IndexT = any>(this: IDataFrame<IndexT, OHLC>): ISeries<IndexT, number> {
 
     return this.rollingWindow(2)
-        .select(window => {
+        .select<[IndexT, number]>(window => {
             const day1 = window.first().close;
             const day2 = window.last().open;
             return [
