@@ -18,12 +18,15 @@ declare module "data-forge/build/lib/series" {
 
 function roc<IndexT = any>(this: ISeries<IndexT, number>, period: number): ISeries<IndexT, number> {
     
-	assert.isNumber(period, "Expected 'period' parameter to 'Series.roc' to be a number that specifies the time period for computing rate of change.");
-
+    assert.isNumber(period, "Expected 'period' parameter to 'Series.roc' to be a number that specifies the time period for computing rate of change.");
+    
     return this.rollingWindow(period)
         .select<[IndexT, number]>(window => {
             const first = window.first();
-            return [window.getIndex().last(), (window.last() - first) / first];
+            return [
+                window.getIndex().last(), 
+                ((window.last() - first) / first) * 100
+            ];
         })
         .withIndex(pair => pair[0])
         .select(pair => pair[1]);

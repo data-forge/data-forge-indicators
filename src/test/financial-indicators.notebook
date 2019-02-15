@@ -24,7 +24,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const dataForge = require('data-forge');\r\nrequire('data-forge-fs');\r\nrequire('data-forge-plot');\r\nrequire('../../build/index'); //TODO: This needs to load the TS file directly!\r\n\r\nlet inputSeries = (await dataForge.readFile(\"./data/STW.csv\").parseCSV())\r\n    .parseDates(\"date\", \"DD/MM/YYYY\")\r\n    .parseFloats([\"open\", \"high\", \"low\", \"close\", \"volume\"])\r\n    .setIndex(\"date\") // Index so we can later merge on date.\r\n    .renameSeries({ date: \"time\" })\r\n    .bake();\r\n\r\ndisplay(inputSeries.head(5));",
-                "lastEvaluationDate": "2019-02-15T15:09:44.664+10:00",
+                "lastEvaluationDate": "2019-02-15T19:27:09.943+10:00",
                 "output": [
                     {
                         "values": [
@@ -119,7 +119,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const daysFalling = inputSeries.deflate(row => row.close).daysFalling();\r\ndisplay(daysFalling.head(3));\r\n\r\nconst withDaysFalling = inputSeries\r\n    .withSeries(\"daysFalling\", daysFalling);\r\n\r\ndisplay(withDaysFalling.tail(200).plot({}, { y: \"close\", y2: \"daysFalling\" }));",
-                "lastEvaluationDate": "2019-02-15T15:09:44.678+10:00",
+                "lastEvaluationDate": "2019-02-15T19:27:09.953+10:00",
                 "output": [
                     {
                         "values": [
@@ -2445,7 +2445,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const daysRising = inputSeries.deflate(row => row.close).daysRising();\r\ndisplay(daysRising.head(3));\r\n\r\nconst withDaysRising = inputSeries\r\n    .withSeries(\"daysRising\", daysRising);\r\n\r\ndisplay(withDaysRising.tail(200).plot({}, { y: \"close\", y2: \"daysRising\" }));",
-                "lastEvaluationDate": "2019-02-15T15:09:44.698+10:00",
+                "lastEvaluationDate": "2019-02-15T19:27:09.963+10:00",
                 "output": [
                     {
                         "values": [
@@ -4771,7 +4771,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const simpleMovingAverage = inputSeries\r\n    .deflate(bar => bar.close)  // Extract closing price series.\r\n    .sma(30)                    // 30 day simple moving average.\r\n    .bake();\r\n\r\nconst withSMA = inputSeries\r\n    .skip(30)                                   // Skip blank sma entries.\r\n    .withSeries(\"sma\", simpleMovingAverage)     // Integrate simple moving average into source data, indexed on date.\r\n    .bake();\r\n\r\ndisplay(withSMA.tail(200).plot({}, { y: [\"close\", \"sma\"] }));",
-                "lastEvaluationDate": "2019-02-15T15:09:44.710+10:00",
+                "lastEvaluationDate": "2019-02-15T19:27:09.972+10:00",
                 "output": [
                     {
                         "values": [
@@ -7062,7 +7062,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const exponentialMovingAverage = inputSeries\r\n    .deflate(bar => bar.close)  // Extract closing price series.\r\n    .ema(30)                    // 30 day exponential moving average.\r\n    .bake();\r\n\r\nconst withEMA = withSMA\r\n    .withSeries(\"ema\", exponentialMovingAverage)    // Integrate moving average into source data, indexed on date.\r\n    .bake();\r\n\r\ndisplay(withEMA.tail(200).plot({}, { y: [\"close\", \"sma\", \"ema\"] }));",
-                "lastEvaluationDate": "2019-02-15T15:09:44.724+10:00",
+                "lastEvaluationDate": "2019-02-15T19:27:09.981+10:00",
                 "output": [
                     {
                         "values": [
@@ -9558,7 +9558,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const bollingerBands = inputSeries\r\n    .deflate(bar => bar.close)  // Extract closing price series.\r\n    .bollinger(20, 2, 2)        // 20 days with bands at 2 standard deviations.\r\n    .bake();\r\n\r\nconst withBollingerBands = bollingerBands\r\n    .withSeries(\"close\",\r\n        inputSeries.deflate(row => row.close)\r\n    );\r\n\r\ndisplay(withBollingerBands.tail(200).plot({}, {}));",
-                "lastEvaluationDate": "2019-02-15T15:09:44.736+10:00",
+                "lastEvaluationDate": "2019-02-15T19:27:09.989+10:00",
                 "output": [
                     {
                         "values": [
@@ -11454,7 +11454,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const percentBandwidth = bollingerBands\r\n    .deflate(band => (band.value - band.lower) / (band.upper - band.lower));\r\n\r\nconst withPercentBandwidth = withBollingerBands.withSeries(\"%b\", percentBandwidth);\r\n\r\ndisplay(percentBandwidth.head(5))\r\ndisplay(withPercentBandwidth.tail(200).plot({}, { y: \"close\", y2:\"%b\" }))",
-                "lastEvaluationDate": "2019-02-15T15:09:44.750+10:00",
+                "lastEvaluationDate": "2019-02-15T19:27:09.999+10:00",
                 "output": [
                     {
                         "values": [
@@ -13586,7 +13586,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const gaps = inputSeries.gaps();\r\ndisplay(gaps.tail(200).plot({ chartType: \"bar\" }));",
-                "lastEvaluationDate": "2019-02-15T15:09:44.763+10:00",
+                "lastEvaluationDate": "2019-02-15T19:27:10.011+10:00",
                 "output": [
                     {
                         "values": [
@@ -14662,7 +14662,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const monthlyDirection = inputSeries.deflate(row => row.close).direction(30); \r\ndisplay(monthlyDirection.tail(200).plot({ chartType: \"bar\" }));",
-                "lastEvaluationDate": "2019-02-15T15:09:44.776+10:00",
+                "lastEvaluationDate": "2019-02-15T19:27:10.017+10:00",
                 "output": [
                     {
                         "values": [
@@ -15738,7 +15738,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const extrema = inputSeries.deflate(row => row.close).extrema();\r\ndisplay(extrema.tail(200).plot({ chartType: \"bar\" }));",
-                "lastEvaluationDate": "2019-02-15T15:09:44.790+10:00",
+                "lastEvaluationDate": "2019-02-15T19:27:10.024+10:00",
                 "output": [
                     {
                         "values": [
@@ -16439,7 +16439,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const trends = inputSeries.deflate(row => row.close).trends();\r\ndisplay(trends.tail(200).plot({ chartType: \"bar\" }))",
-                "lastEvaluationDate": "2019-02-15T15:09:44.804+10:00",
+                "lastEvaluationDate": "2019-02-15T19:27:10.032+10:00",
                 "output": [
                     {
                         "values": [
@@ -17515,7 +17515,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const upTrendCounter = inputSeries.deflate(row => row.close).trends().counter(trend => trend > 0);\r\ndisplay(upTrendCounter.tail(200).plot());",
-                "lastEvaluationDate": "2019-02-15T15:09:44.815+10:00",
+                "lastEvaluationDate": "2019-02-15T19:27:10.037+10:00",
                 "output": [
                     {
                         "values": [
@@ -18591,7 +18591,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "\r\nconst downTrendCounter = inputSeries.deflate(row => row.close).trends().counter(trend => trend < 0);\r\ndisplay(downTrendCounter.tail(200).plot());",
-                "lastEvaluationDate": "2019-02-15T15:09:44.826+10:00",
+                "lastEvaluationDate": "2019-02-15T19:27:10.046+10:00",
                 "output": [
                     {
                         "values": [
@@ -19667,7 +19667,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const momentum = inputSeries.deflate(row => row.close).momentum(30);\r\ndisplay(momentum.tail(200).plot());",
-                "lastEvaluationDate": "2019-02-15T15:09:44.836+10:00",
+                "lastEvaluationDate": "2019-02-15T19:27:10.052+10:00",
                 "output": [
                     {
                         "values": [
@@ -20742,8 +20742,8 @@
                 "id": "98117520-2f79-11e9-b0dd-85be4db4a9a7",
                 "cellType": "code",
                 "cellScope": "global",
-                "code": "const rateOfChange = inputSeries.deflate(row => row.close).rateOfChange(30);\r\ndisplay(rateOfChange.tail(200).plot());",
-                "lastEvaluationDate": "2019-02-15T15:09:44.847+10:00",
+                "code": "const rateOfChange = inputSeries.deflate(row => row.close).roc(30);\r\ndisplay(rateOfChange.tail(200).plot());",
+                "lastEvaluationDate": "2019-02-15T19:27:10.058+10:00",
                 "output": [
                     {
                         "values": [
@@ -21819,7 +21819,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const rsi = inputSeries.rsi(14);\r\ndisplay(rsi.tail(200).plot());",
-                "lastEvaluationDate": "2019-02-15T15:09:44.861+10:00",
+                "lastEvaluationDate": "2019-02-15T19:27:10.064+10:00",
                 "output": [
                     {
                         "values": [

@@ -11,3 +11,5 @@ import "./indicators/days-rising";
 import "./indicators/momentum";
 import "./indicators/rate-of-change";
 import "./indicators/rsi";
+import "./indicators/streaks";
+import "./indicators/conners-rsi";

@@ -6,14 +6,14 @@ import "../../index";
 import * as path from 'path';
 import { readJSON, writeJSON } from './test-utils';
 
-describe('rsi', () => {
+describe('streaks', () => {
 
-    it('rsi', async function () {
+    it('streaks', async function () {
 
         const df = await dataForge.readFile("./src/test/data/STW.csv")
             .parseCSV({ dynamicTyping: true });
 
-        const values = df.deflate(row => row.close).rsi(3).toPairs();
+        const values = df.deflate(row => row.close).streaks(2).toPairs();
 
         const outputFilePath = path.join(__dirname, "output", this.test.fullTitle() + ".json");
         
