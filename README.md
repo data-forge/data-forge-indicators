@@ -218,3 +218,11 @@ Compute [rate of change](https://en.wikipedia.org/wiki/Momentum_(technical_analy
 ```javascript
 const rateOfChange = inputSeries.deflate(row => row.close).rateOfChange(30);
 ```
+
+## Relative strength index
+
+Use the `rsi` function to compute relative strength.
+
+```javascript
+const rsi = inputSeries.rsi(14);
+```
