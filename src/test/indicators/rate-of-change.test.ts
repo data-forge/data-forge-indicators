@@ -13,7 +13,7 @@ describe('rate of change', () => {
         const df = await dataForge.readFile("./src/test/data/STW.csv")
             .parseCSV({ dynamicTyping: true });
 
-        const values = df.deflate(row => row.close).rateOfChange(30).toPairs();
+        const values = df.deflate(row => row.close).roc(30).toPairs();
 
         const outputFilePath = path.join(__dirname, "output", this.test.fullTitle() + ".json");
         

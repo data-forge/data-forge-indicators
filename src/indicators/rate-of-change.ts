@@ -3,11 +3,11 @@ import { ISeries, Series } from 'data-forge';
 
 declare module "data-forge/build/lib/series" {
     interface ISeries<IndexT, ValueT> {
-        rateOfChange(period: number): ISeries<IndexT, number>;
+        roc(period: number): ISeries<IndexT, number>;
     }
 
     interface Series<IndexT, ValueT> {
-        rateOfChange(period: number): ISeries<IndexT, number>;
+        roc(period: number): ISeries<IndexT, number>;
     }
 }
 
@@ -16,9 +16,9 @@ declare module "data-forge/build/lib/series" {
  * https://en.wikipedia.org/wiki/Momentum_(technical_analysis)
  */
 
-function rateOfChange<IndexT = any>(this: ISeries<IndexT, number>, period: number): ISeries<IndexT, number> {
+function roc<IndexT = any>(this: ISeries<IndexT, number>, period: number): ISeries<IndexT, number> {
     
-	assert.isNumber(period, "Expected 'period' parameter to 'Series.rateOfChange' to be a number that specifies the time period for computing rate of change.");
+	assert.isNumber(period, "Expected 'period' parameter to 'Series.roc' to be a number that specifies the time period for computing rate of change.");
 
     return this.rollingWindow(period)
         .select<[IndexT, number]>(window => {
@@ -29,4 +29,4 @@ function rateOfChange<IndexT = any>(this: ISeries<IndexT, number>, period: numbe
         .select(pair => pair[1]);
 }
 
-Series.prototype.rateOfChange = rateOfChange;
+Series.prototype.roc = roc;
