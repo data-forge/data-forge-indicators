@@ -14,10 +14,15 @@ Do prototyping and data analysis in JavaScript with [Data-Forge Notebook](http:/
 - Exponential moving average (`ema`)
 - Bollinger bands (`bollinger`)
 - Percent bandwidth or %b (`percentBandwidth`)
+- Gaps (`gaps`)
 - Market direction (`direction`)
 - Market extrema (`extrema`)
 - Market trends (`trends`)
 - Momentum (`momentum`)
+- Rate of change (`roc`)
+- Relative strength index (`rsi`)
+- Streaks (`streaks`)
+- Connor's RSI (`crsi`)
 
 MORE INDICATORS COMING SOON
 
@@ -225,4 +230,26 @@ Use the `rsi` function to compute relative strength.
 
 ```javascript
 const rsi = inputSeries.rsi(14);
+```
+
+## Streaks
+
+Use the `streaks` function to count streaks of up days and down days.
+
+Up day streaks are counted with positive numbers, down day streaks with negative numbers.
+
+This function is used by Connor's RSI (`csri`).
+
+```javascript
+const streaks = inputSeries.deflate(row => row.close).streaks();
+display(streaks.plot());
+```
+
+## Connor's RSI
+
+Use the `csri` function for Connor's updated RSI indicator.
+
+```javascript
+const crsi = inputSeries.deflate(row => row.close).crsi(3, 2, 100);
+display(crsi.plot({ y: { min: 0, max: 99 } }));
 ```
