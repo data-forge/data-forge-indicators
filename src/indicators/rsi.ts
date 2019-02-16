@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { IDataFrame, DataFrame, ISeries, Series } from 'data-forge';
-import "../indicators/direction";
+import "../indicators/sma";
 
 declare module "data-forge/build/lib/series" {
     interface ISeries<IndexT, ValueT> {
@@ -18,12 +18,20 @@ function rsi<IndexT = any>(this: ISeries<IndexT, number>, period: number): ISeri
 
     return this.rollingWindow(period)
         .select<[IndexT, number]>(window => {
-            const upDays = window.direction(2)
-                .where(direction => direction > 0)
-                .count();
+            // https://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:relative_strength_index_rsi
+            const changes = window.amountChange(2).bake();
+            const averageLoss = Math.abs(changes.where(change => change < 0).average());
+            if (averageLoss < Number.EPSILON) {
+                return [
+                    window.getIndex().last(),
+                    100
+                ];    
+            }
+            const averageGain = changes.where(change => change > 0).average();
+           const relativeStrength = averageGain / averageLoss;
             return [
-                window.getIndex().last(), 
-                (upDays / window.count()) * 100.0
+                window.getIndex().last(),
+                100 - (100 / (1 + relativeStrength))
             ];
         })
         .withIndex(pair => pair[0])
