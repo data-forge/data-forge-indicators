@@ -14,6 +14,7 @@ declare module "data-forge/build/lib/series" {
 /**
  * Compute the rate of change.
  * https://en.wikipedia.org/wiki/Momentum_(technical_analysis)
+ * https://www.tradingview.com/wiki/Rate_of_Change_(ROC)
  */
 
 function roc<IndexT = any>(this: ISeries<IndexT, number>, period: number): ISeries<IndexT, number> {

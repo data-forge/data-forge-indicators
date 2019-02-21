@@ -26,7 +26,7 @@ function crsi<IndexT = any>(this: ISeries<IndexT, number>, rsiPeriod: number, st
     const streaks = this.streaks(2).rsi(streakRsiPeriod);
     const roc = this.roc(rocPeriod);
 
-    return Series.zip( //TODO: Be good if DF had a function to align values.
+    return Series.zip( //TODO: Be good if DF had a function to align/merge values.
         [
             rsi.tail(alignedValues), 
             streaks.tail(alignedValues),

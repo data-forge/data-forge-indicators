@@ -6,7 +6,9 @@ import "../../index";
 import * as path from 'path';
 import { readJSON, writeJSON } from './test-utils';
 
-describe('connors rsi', () => {
+describe('connors rsi', function () {
+
+    this.timeout(3000);
 
     it('connors rsi', async function () {
 
