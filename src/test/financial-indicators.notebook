@@ -2,6 +2,7 @@
     "version": 1,
     "sheet": {
         "id": "1f799620-d370-11e8-b62a-7b63438e3c42",
+        "language": "javascript",
         "cells": [
             {
                 "id": "31e983b0-daf5-11e8-831f-d150615bd7aa",
@@ -24,7 +25,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "// Dogey that I have to delete the local install of DF!!\r\n// DFN should respect the DF that is installed higher up in the directory tree.\r\nconst util = require('util');\r\nconst exec = util.promisify(require('child_process').exec);\r\nawait exec(\"rm -rf ./node_modules/data-forge/*\"); // Have to do this because DFN now restores local modules automatically!!\r\n\r\nconst dataForge = require('data-forge');\r\nrequire('data-forge-fs');\r\nrequire('data-forge-plot');\r\nrequire('../../build/index'); //TODO: This needs to load the TS file directly!\r\n\r\nlet inputSeries = (await dataForge.readFile(\"./data/STW.csv\").parseCSV())\r\n    .parseDates(\"date\", \"DD/MM/YYYY\")\r\n    .parseFloats([\"open\", \"high\", \"low\", \"close\", \"volume\"])\r\n    .setIndex(\"date\") // Index so we can later merge on date.\r\n    .renameSeries({ date: \"time\" })\r\n    .bake();\r\n\r\ndisplay(inputSeries.head(5));",
-                "lastEvaluationDate": "2019-02-21T18:53:44.748+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.726+10:00",
                 "output": [
                     {
                         "values": [
@@ -119,7 +120,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const daysFalling = inputSeries.deflate(row => row.close).daysFalling();\r\ndisplay(daysFalling.head(3));\r\n\r\nconst withDaysFalling = inputSeries\r\n    .withSeries(\"daysFalling\", daysFalling);\r\n\r\ndisplay(withDaysFalling.plot({}, { y: \"close\", y2: \"daysFalling\" }));",
-                "lastEvaluationDate": "2019-02-21T18:53:44.754+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.734+10:00",
                 "output": [
                     {
                         "values": [
@@ -2961,8 +2962,6 @@
                                     },
                                     "plotConfig": {
                                         "chartType": "line",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",
@@ -3016,7 +3015,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const daysRising = inputSeries.deflate(row => row.close).daysRising();\r\ndisplay(daysRising.head(3));\r\n\r\nconst withDaysRising = inputSeries\r\n    .withSeries(\"daysRising\", daysRising);\r\n\r\ndisplay(withDaysRising.plot({}, { y: \"close\", y2: \"daysRising\" }));",
-                "lastEvaluationDate": "2019-02-21T18:53:44.761+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.741+10:00",
                 "output": [
                     {
                         "values": [
@@ -5858,8 +5857,6 @@
                                     },
                                     "plotConfig": {
                                         "chartType": "line",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",
@@ -5913,7 +5910,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const simpleMovingAverage = inputSeries\r\n    .deflate(bar => bar.close)  // Extract closing price series.\r\n    .sma(30)                    // 30 day simple moving average.\r\n    .bake();\r\n\r\nconst withSMA = inputSeries\r\n    .skip(30)                                   // Skip blank sma entries.\r\n    .withSeries(\"sma\", simpleMovingAverage)     // Integrate simple moving average into source data, indexed on date.\r\n    .bake();\r\n\r\ndisplay(withSMA.plot({}, { y: [\"close\", \"sma\"] }));",
-                "lastEvaluationDate": "2019-02-21T18:53:44.776+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.746+10:00",
                 "output": [
                     {
                         "values": [
@@ -8392,8 +8389,6 @@
                                     },
                                     "plotConfig": {
                                         "chartType": "line",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",
@@ -8446,7 +8441,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const exponentialMovingAverage = inputSeries\r\n    .deflate(bar => bar.close)  // Extract closing price series.\r\n    .ema(30)                    // 30 day exponential moving average.\r\n    .bake();\r\n\r\nconst withEMA = withSMA\r\n    .withSeries(\"ema\", exponentialMovingAverage)    // Integrate moving average into source data, indexed on date.\r\n    .bake();\r\n\r\ndisplay(withEMA.plot({}, { y: [\"close\", \"sma\", \"ema\"] }));",
-                "lastEvaluationDate": "2019-02-21T18:53:44.782+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.751+10:00",
                 "output": [
                     {
                         "values": [
@@ -11149,8 +11144,6 @@
                                     },
                                     "plotConfig": {
                                         "chartType": "line",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",
@@ -11206,7 +11199,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const bollingerBands = inputSeries\r\n    .deflate(bar => bar.close)  // Extract closing price series.\r\n    .bollinger(20, 2, 2)        // 20 days with bands at 2 standard deviations.\r\n    .bake();\r\n\r\nconst withBollingerBands = bollingerBands\r\n    .withSeries(\"close\",\r\n        inputSeries.deflate(row => row.close)\r\n    );\r\n\r\ndisplay(withBollingerBands.plot({}, {}));",
-                "lastEvaluationDate": "2019-02-21T18:53:44.791+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.756+10:00",
                 "output": [
                     {
                         "values": [
@@ -13336,8 +13329,6 @@
                                     },
                                     "plotConfig": {
                                         "chartType": "line",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",
@@ -13389,7 +13380,7 @@
             {
                 "id": "8e17a540-2f0f-11e9-acd3-3b902f006cd5",
                 "cellType": "markdown",
-                "code": "## Percent bandwidth\r\n\r\n[*Percent bandwidth* or *%b*](https://en.wikipedia.org/wiki/Bollinger_Bands#Indicators_derived_from_Bollinger_Bands) is an indicator derived from Bollinger Bands.",
+                "code": "## Percent b\r\n\r\n[*Percent b* or *%b*](https://en.wikipedia.org/wiki/Bollinger_Bands#Indicators_derived_from_Bollinger_Bands) is an indicator derived from Bollinger Bands.",
                 "lastEvaluationDate": "2019-02-13T07:49:48.781+10:00",
                 "output": [],
                 "errors": []
@@ -13398,8 +13389,8 @@
                 "id": "baff4fe0-2f0f-11e9-acd3-3b902f006cd5",
                 "cellType": "code",
                 "cellScope": "global",
-                "code": "const percentBandwidth = bollingerBands\r\n    .deflate(band => (band.value - band.lower) / (band.upper - band.lower));\r\n\r\nconst withPercentBandwidth = withBollingerBands.withSeries(\"%b\", percentBandwidth);\r\n\r\ndisplay(percentBandwidth.head(5))\r\ndisplay(withPercentBandwidth.plot({}, { y: \"close\", y2:\"%b\" }))",
-                "lastEvaluationDate": "2019-02-21T18:53:44.797+10:00",
+                "code": "const percentB = bollingerBands.percentB();\r\nconst withPercentB = withBollingerBands.withSeries(\"%b\", percentB);\r\n\r\ndisplay(percentB.head(5))\r\ndisplay(withPercentB.plot({}, { y: \"close\", y2:\"%b\" }))",
+                "lastEvaluationDate": "2019-04-16T13:11:24.761+10:00",
                 "output": [
                     {
                         "values": [
@@ -15806,8 +15797,6 @@
                                     },
                                     "plotConfig": {
                                         "chartType": "line",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",
@@ -15861,7 +15850,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const gaps = inputSeries.gaps();\r\ndisplay(gaps.plot({ chartType: \"bar\" }));",
-                "lastEvaluationDate": "2019-02-21T18:53:44.807+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.767+10:00",
                 "output": [
                     {
                         "values": [
@@ -17141,8 +17130,6 @@
                                     },
                                     "plotConfig": {
                                         "chartType": "bar",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",
@@ -17192,7 +17179,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const monthlyDirection = inputSeries.deflate(row => row.close).direction(30); \r\ndisplay(monthlyDirection.plot({ chartType: \"bar\" }));",
-                "lastEvaluationDate": "2019-02-21T18:53:44.813+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.771+10:00",
                 "output": [
                     {
                         "values": [
@@ -18472,8 +18459,6 @@
                                     },
                                     "plotConfig": {
                                         "chartType": "bar",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",
@@ -18523,7 +18508,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const extrema = inputSeries.deflate(row => row.close).extrema();\r\ndisplay(extrema.plot({ chartType: \"bar\" }));",
-                "lastEvaluationDate": "2019-02-21T18:53:44.820+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.775+10:00",
                 "output": [
                     {
                         "values": [
@@ -19173,8 +19158,6 @@
                                     },
                                     "plotConfig": {
                                         "chartType": "bar",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",
@@ -19224,7 +19207,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const trends = inputSeries.deflate(row => row.close).trends();\r\ndisplay(trends.plot({ chartType: \"bar\" }))",
-                "lastEvaluationDate": "2019-02-21T18:53:44.826+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.779+10:00",
                 "output": [
                     {
                         "values": [
@@ -20484,8 +20467,6 @@
                                     },
                                     "plotConfig": {
                                         "chartType": "bar",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",
@@ -20535,7 +20516,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const upTrendCounter = inputSeries.deflate(row => row.close).trends().counter(trend => trend > 0);\r\ndisplay(upTrendCounter.plot());",
-                "lastEvaluationDate": "2019-02-21T18:53:44.834+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.784+10:00",
                 "output": [
                     {
                         "values": [
@@ -21820,8 +21801,6 @@
                                     },
                                     "plotConfig": {
                                         "chartType": "line",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",
@@ -21871,7 +21850,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "\r\nconst downTrendCounter = inputSeries.deflate(row => row.close).trends().counter(trend => trend < 0);\r\ndisplay(downTrendCounter.plot());",
-                "lastEvaluationDate": "2019-02-21T18:53:44.843+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.789+10:00",
                 "output": [
                     {
                         "values": [
@@ -23156,8 +23135,6 @@
                                     },
                                     "plotConfig": {
                                         "chartType": "line",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",
@@ -23207,7 +23184,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const streaks = inputSeries.deflate(row => row.close).streaks();\r\ndisplay(streaks.plot());",
-                "lastEvaluationDate": "2019-02-21T18:53:44.851+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.795+10:00",
                 "output": [
                     {
                         "values": [
@@ -24487,8 +24464,6 @@
                                     },
                                     "plotConfig": {
                                         "chartType": "line",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",
@@ -24538,7 +24513,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const momentum = inputSeries.deflate(row => row.close).momentum(30);\r\ndisplay(momentum.plot());",
-                "lastEvaluationDate": "2019-02-21T18:53:44.858+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.801+10:00",
                 "output": [
                     {
                         "values": [
@@ -25678,8 +25653,6 @@
                                     },
                                     "plotConfig": {
                                         "chartType": "line",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",
@@ -25729,7 +25702,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const rateOfChange = inputSeries.deflate(row => row.close).roc(30);\r\ndisplay(rateOfChange.plot());",
-                "lastEvaluationDate": "2019-02-21T18:53:44.867+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.805+10:00",
                 "output": [
                     {
                         "values": [
@@ -26869,8 +26842,6 @@
                                     },
                                     "plotConfig": {
                                         "chartType": "line",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",
@@ -26920,7 +26891,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const rsi = inputSeries.deflate(row => row.close).rsi(14);\r\ndisplay(rsi.plot({ y: { min: 0, max: 99 } }));",
-                "lastEvaluationDate": "2019-02-21T18:53:44.876+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.810+10:00",
                 "output": [
                     {
                         "values": [
@@ -28146,8 +28117,6 @@
                                             "label": {}
                                         },
                                         "chartType": "line",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",
@@ -28193,7 +28162,7 @@
                 "cellType": "code",
                 "cellScope": "global",
                 "code": "const crsi = inputSeries.deflate(row => row.close).crsi(3, 2, 100);\r\ndisplay(crsi.plot({ y: { min: 0, max: 99 } }));",
-                "lastEvaluationDate": "2019-02-21T18:53:44.886+10:00",
+                "lastEvaluationDate": "2019-04-16T13:11:24.814+10:00",
                 "output": [
                     {
                         "values": [
@@ -28989,8 +28958,6 @@
                                             "label": {}
                                         },
                                         "chartType": "line",
-                                        "width": 800,
-                                        "height": 600,
                                         "template": "c3",
                                         "x": {
                                             "axisType": "default",

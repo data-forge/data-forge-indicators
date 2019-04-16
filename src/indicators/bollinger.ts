@@ -58,11 +58,8 @@ function bollinger<IndexT = any> (
 
     return this.rollingWindow(period)
         .select<[IndexT, IBollingerBand]>(window => {
-            // http://stackoverflow.com/a/2253903/25868
-            const count = window.count(); //todo: want a helper for std dev.
             const avg = window.average();
-            const sum = window.select(value => (value - avg) * (value - avg)).sum();
-            const stddev = Math.sqrt(sum / count);
+            const stddev = window.std();
             
             var bollingerRecord: IBollingerBand = {
                 value: window.last(),

@@ -144,15 +144,26 @@ The chart looks like this:
 
 ![Bollinger bands chart](https://raw.githubusercontent.com/data-forge/data-forge-indicators/master/images/bollinger-chart.png)
 
-## Percent bandwidth
+## Percent b and bandwidth
 
-[Percent bandwidth](https://en.wikipedia.org/wiki/Bollinger_Bands#Indicators_derived_from_Bollinger_Bands) or %b is an indicator dervied from Bollinger Bands. It shows where price is in relation to the bands with values at 1 for the upper band and 0 for the lower band.
+Percent b (%b) and bandwidth are indicators [derived from Bollinger Bands]((https://en.wikipedia.org/wiki/Bollinger_Bands#Indicators_derived_from_Bollinger_Bands)). 
+
+%b shows where price is in relation to the bands with values at 1 for the upper band and 0 for the lower band:
 
 ```javascript
 const percentB = = inputSeries
     .deflate(bar => bar.close)
     .bollinger(20, 2, 2)        // Need Bollinger Bands first.
-    .percentBandwidth();
+    .percentB();
+```
+
+Bandwidth shows the normalised width of the bands:
+
+```javascript
+const bandwidth = = inputSeries
+    .deflate(bar => bar.close)
+    .bollinger(20, 2, 2)        // Need Bollinger Bands first.
+    .bandwidth();
 ```
 
 ## Gaps

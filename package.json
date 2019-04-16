@@ -1,18 +1,22 @@
 {
     "name": "data-forge-indicators",
-    "version": "0.1.19",
+    "version": "0.2.2",
     "description": "Financial indicators for use with Data-Forge.",
     "main": "build/index.js",
     "types": "build/index.d.ts",
     "scripts": {
+        "c": "npm rujn clean",
         "clean": "rm -rf build/*",
+        "b": "npm run build",
         "build": "tsc",
         "clean-build": "rm -rf build/* && tsc",
         "build:watch": "tsc --watch",
         "clean-build:watch": "rm -rf build/* && tsc --watch",
+        "t": "npm run test",
         "test": "nyc mocha --opts ./src/test/mocha.opts",
+        "tw": "npm run test:watch",
         "test:watch": "mocha --watch --watch-extensions ts --opts ./src/test/mocha.opts",
-        "prepublishOnly": "tsc"
+        "prepublishOnly": "npm run clean && npm run test && npm run build"
     },
     "repository": {
         "type": "git",
@@ -64,7 +68,7 @@
     "homepage": "https://github.com/data-forge/data-forge-indicators#readme",
     "dependencies": {},
     "peerDependencies": {
-        "data-forge": "^1.4.7"
+        "data-forge": "^1.6.9"
     },
     "devDependencies": {
         "@types/chai": "4.0.4",
