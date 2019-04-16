@@ -12,8 +12,7 @@ Do prototyping and data analysis in JavaScript with [Data-Forge Notebook](http:/
 
 - Simple moving average (`sma`)
 - Exponential moving average (`ema`)
-- Bollinger bands (`bollinger`)
-- Percent bandwidth or %b (`percentBandwidth`)
+- Bollinger bands (`bollinger`) (including `percentB` and `bandwidth`)
 - Gaps (`gaps`)
 - Market direction (`direction`)
 - Market extrema (`extrema`)
