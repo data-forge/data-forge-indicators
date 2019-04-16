@@ -5,7 +5,7 @@
     "main": "build/index.js",
     "types": "build/index.d.ts",
     "scripts": {
-        "c": "npm rujn clean",
+        "c": "npm run clean",
         "clean": "rm -rf build/*",
         "b": "npm run build",
         "build": "tsc",
@@ -75,7 +75,7 @@
         "@types/mocha": "2.2.43",
         "@types/node": "8.0.28",
         "chai": "4.1.2",
-        "data-forge-fs": "0.0.3",
+        "data-forge-fs": "0.0.5",
         "mocha": "3.5.3",
         "nyc": "11.8.0",
         "source-map-support": "0.5.6",
