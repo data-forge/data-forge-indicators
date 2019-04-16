@@ -145,7 +145,7 @@ The chart looks like this:
 
 ## Percent b and bandwidth
 
-Percent b (%b) and bandwidth are indicators [derived from Bollinger Bands]((https://en.wikipedia.org/wiki/Bollinger_Bands#Indicators_derived_from_Bollinger_Bands)). 
+Percent b (%b) and bandwidth are indicators [derived from Bollinger Bands](https://en.wikipedia.org/wiki/Bollinger_Bands#Indicators_derived_from_Bollinger_Bands). 
 
 %b shows where price is in relation to the bands with values at 1 for the upper band and 0 for the lower band:
 
