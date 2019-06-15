@@ -266,7 +266,7 @@ display(crsi.plot({ y: { min: 0, max: 99 } }));
 
 ## MACD
 
-Use the `macd` function to compute **moving average convergence divergence**:
+Use the `macd` function to compute *moving average convergence divergence*:
 
 ```javascript
 const macd = inputSeries.deflate(row => row.close).macd(12, 26, 9); // Inputs are short ema period, long ema period and signal line period.
