@@ -1,6 +1,6 @@
 {
     "name": "data-forge-indicators",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "description": "Financial indicators for use with Data-Forge.",
     "main": "build/index.js",
     "types": "build/index.d.ts",
@@ -68,14 +68,14 @@
     "homepage": "https://github.com/data-forge/data-forge-indicators#readme",
     "dependencies": {},
     "peerDependencies": {
-        "data-forge": "^1.6.9"
+        "data-forge": "^1.7.2"
     },
     "devDependencies": {
         "@types/chai": "4.0.4",
         "@types/mocha": "2.2.43",
         "@types/node": "8.0.28",
         "chai": "4.1.2",
-        "data-forge-fs": "0.0.5",
+        "data-forge-fs": "0.0.6",
         "mocha": "3.5.3",
         "nyc": "11.8.0",
         "source-map-support": "0.5.6",
