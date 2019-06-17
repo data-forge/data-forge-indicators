@@ -1,5 +1,5 @@
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Noto Sans','Roboto', sans-serif;
     max-width: 1000px;
     margin: auto;
 }
@@ -9,8 +9,12 @@ body {
     margin: auto;
 }
 
+pre {
+    font-family: 'Source Code Pro', monospace !important;
+}
+
 .output-border {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     font-size: 0.85em;
     border: 1px dashed #999;
     border-top: none;
@@ -19,7 +23,7 @@ body {
 }
 
 .cell-border {
-    font-family: 'Source Code Pro', monospace;
+    font-family: 'Source Code Pro', monospace !important;
     padding-left: 6px;
     border: 1px dashed #999;
 }
