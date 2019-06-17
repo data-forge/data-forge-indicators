@@ -19,13 +19,14 @@ pre {
     border: 1px dashed #999;
     border-top: none;
     padding: 4px;
-    overflow: "hidden";
+    overflow-x: auto;
 }
 
 .cell-border {
     font-family: 'Source Code Pro', monospace !important;
     padding-left: 6px;
     border: 1px dashed #999;
+    overflow-x: auto;
 }
 
 .chart-placeholder {
@@ -77,10 +78,6 @@ iframe {
 
 .code-cell-with-output {
     margin-bottom: 15px;
-}
-
-.code-cell .cell-border {
-    overflow: hidden;
 }
 
 .flex-col {
