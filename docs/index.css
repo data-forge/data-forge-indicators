@@ -9,10 +9,6 @@ body {
     margin: auto;
 }
 
-pre {
-    font-family: 'Source Code Pro', monospace !important;
-}
-
 .output-border {
     font-family: 'Source Code Pro', monospace !important;
     font-size: 0.85em;
