@@ -239,7 +239,7 @@ const rateOfChange = inputSeries.deflate(row => row.close).roc(30);
 Use the `rsi` function to compute relative strength.
 
 ```javascript
-const rsi = inputSeries.rsi(14);
+const rsi = inputSeries.deflate(row => row.close).rsi(14);
 ```
 
 ## Streaks
