@@ -231,7 +231,7 @@ const momentum = inputSeries.deflate(row => row.close).momentum(30);
 Compute [rate of change](https://en.wikipedia.org/wiki/Momentum_(technical_analysis)) using the `rateOfChange` function.
 
 ```javascript
-const rateOfChange = inputSeries.deflate(row => row.close).rateOfChange(30);
+const rateOfChange = inputSeries.deflate(row => row.close).roc(30);
 ```
 
 ## Relative strength index
