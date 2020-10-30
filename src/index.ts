@@ -15,3 +15,5 @@ import "./indicators/rsi";
 import "./indicators/streaks";
 import "./indicators/conners-rsi";
 import "./indicators/macd";
+import "./indicators/stochastic-fast"
+import "./indicators/stochastic-slow"

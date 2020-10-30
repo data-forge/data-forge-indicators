@@ -9,19 +9,19 @@ export interface IStochasticSlow {
     percentD: number;
 }
 
-declare module "data-forge/build/lib/series" {
+declare module "data-forge/build/lib/dataframe" {
 
-    interface ISeries<IndexT, ValueT> {
+    interface IDataFrame<IndexT, ValueT> {
         stochasticSlow(k: number, d: number, smooth: number): IDataFrame<any, IStochasticSlow>;
     }
 
-    interface Series<IndexT, ValueT> {
+    interface DataFrame<IndexT, ValueT> {
         stochasticSlow(k: number, d: number, smooth: number): IDataFrame<any, IStochasticSlow>;
     }
 }
 
 function stochasticSlow<IndexT = any> (
-    this: ISeries<IndexT, number>,
+    this: DataFrame<IndexT, number>,
     k: number,
     d: number,
     smooth: number
@@ -40,4 +40,4 @@ function stochasticSlow<IndexT = any> (
     ])
 }
 
-Series.prototype.stochasticSlow = stochasticSlow;
+DataFrame.prototype.stochasticSlow = stochasticSlow;
