@@ -1,14 +1,14 @@
 import { assert } from 'chai';
-import { ISeries, Series, IDataFrame } from 'data-forge';
+import { ISeries, Series, DataFrame, IDataFrame } from 'data-forge';
 import { OHLC } from './ohlc';
 
-declare module "data-forge/build/lib/series" {
+declare module "data-forge/build/lib/dataframe" {
 
-    interface ISeries<IndexT, ValueT> {
+    interface IDataFrame<IndexT, ValueT> {
         stochasticK(period: number): ISeries<IndexT, number>;
     }
 
-    interface Series<IndexT, ValueT> {
+    interface DataFrame<IndexT, ValueT> {
         stochasticK(period: number): ISeries<IndexT, number>;
     }
 }
@@ -31,4 +31,4 @@ function stochasticK<IndexT = any>(this: IDataFrame<IndexT, OHLC>, period: numbe
         .select(pair => pair[1]);
 }
 
-Series.prototype.stochasticK = stochasticK;
+DataFrame.prototype.stochasticK = stochasticK;
