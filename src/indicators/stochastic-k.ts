@@ -2,6 +2,12 @@ import { assert } from 'chai';
 import { ISeries, Series, DataFrame, IDataFrame } from 'data-forge';
 import { OHLC } from './ohlc';
 
+
+/**
+ * Compute the stochastic
+ * https://en.wikipedia.org/wiki/Stochastic_oscillator
+ */
+
 declare module "data-forge/build/lib/dataframe" {
 
     interface IDataFrame<IndexT, ValueT> {

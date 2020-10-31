@@ -2,6 +2,13 @@ import { assert } from 'chai';
 import { ISeries, Series, DataFrame, IDataFrame } from 'data-forge';
 import "./sma"
 import './stochastic-k'
+
+
+/**
+ * Compute the stochastic
+ * https://en.wikipedia.org/wiki/Stochastic_oscillator
+ */
+
 export interface IStochasticFast {
     /** */
     percentK: number;
