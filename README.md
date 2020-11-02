@@ -23,6 +23,7 @@ Do prototyping and data analysis in JavaScript with [Data-Forge Notebook](http:/
 - Streaks (`streaks`)
 - Connor's RSI (`crsi`)
 - Stochastic (`stochasticSlow` and `stochasticFast`)
+
 MORE INDICATORS COMING SOON
 
 ## Setup
