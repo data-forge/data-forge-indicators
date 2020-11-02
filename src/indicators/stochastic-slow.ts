@@ -2,6 +2,13 @@ import { assert } from 'chai';
 import { ISeries, Series, DataFrame, IDataFrame, Index } from 'data-forge';
 import "./sma"
 import './stochastic-k'
+
+
+/**
+ * Compute the stochastic
+ * https://en.wikipedia.org/wiki/Stochastic_oscillator
+ */
+
 export interface IStochasticSlow {
     /** */
     percentK: number;
@@ -19,6 +26,7 @@ declare module "data-forge/build/lib/dataframe" {
         stochasticSlow(k: number, d: number, smooth: number): IDataFrame<any, IStochasticSlow>;
     }
 }
+
 
 function stochasticSlow<IndexT = any> (
     this: DataFrame<IndexT, number>,
