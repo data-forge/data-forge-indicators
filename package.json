@@ -1,6 +1,6 @@
 {
     "name": "data-forge-indicators",
-    "version": "0.2.6",
+    "version": "0.2.7",
     "description": "Financial indicators for use with Data-Forge.",
     "main": "build/index.js",
     "types": "build/index.d.ts",
