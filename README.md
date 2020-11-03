@@ -22,6 +22,7 @@ Do prototyping and data analysis in JavaScript with [Data-Forge Notebook](http:/
 - Relative strength index (`rsi`)
 - Streaks (`streaks`)
 - Connor's RSI (`crsi`)
+- Stochastic (`stochasticSlow` and `stochasticFast`)
 
 MORE INDICATORS COMING SOON
 
@@ -273,3 +274,15 @@ const macd = inputSeries.deflate(row => row.close).macd(12, 26, 9); // Inputs ar
 display(macd.plot({}, { y: "histogram" }));
 ```
 
+## Stochastic
+
+Compute Stochastic using the `stochasticSlow`  or `stochasticFast`  function.
+
+```javascript
+const stochasticSlow = inputSeries.stochasticSlow(20, 12, 12)
+    .withSeries('stoch slow', stochasticSlow)
+
+const stochasticFast = inputSeries.stochasticSlow(20, 12)
+    .withSeries('stoch fast', stochasticFast)
+
+```
