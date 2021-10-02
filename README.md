@@ -8,6 +8,8 @@ Need to learn data wrangling? See my book [Data Wrangling with JavaScript](http:
 
 Do prototyping and data analysis in JavaScript with [Data-Forge Notebook](http://www.data-forge-notebook.com/).
 
+[Click here to support my work](https://www.codecapers.com.au/about#support-my-work)
+
 ## Indicators supported
 
 - Simple moving average (`sma`)
